@@ -1,3 +1,11 @@
 {
-  // "recommendations": ["Vue.vscode-typescript-vue-plugin"]
+  "recommendations": [
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "aaron-bond.better-comments",
+    "naumovs.color-highlight",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "vue.volar"
+  ]
 }
