@@ -1,6 +1,7 @@
 <template>
-  <div class="grid grid-cols-4">
+  <div class="grid grid-cols-4 gap-4 max-w-[35rem]">
     <button
+      class="bg-zinc-800 hover:shadow-md hover:shadow-rose-600 rounded-lg aspect-square"
       @click="handleLaunchpadButtonClick()"
       v-for="(button, index) in numberOfButtons"
       :key="index"
