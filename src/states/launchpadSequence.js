@@ -1,3 +1,11 @@
 import { reactive } from 'vue'
 
-export const lpSequence = reactive([])
+export const lpSequence = reactive({
+  numberOfItems: 0,
+  array: [
+    {
+      name: 'START',
+      id: -1
+    }
+  ]
+})
