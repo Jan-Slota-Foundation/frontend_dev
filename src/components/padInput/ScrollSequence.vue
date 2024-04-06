@@ -35,6 +35,8 @@ export default {
   name: 'ScrollSequence',
   methods: {
     async handlePush() {
+      console.log('iteration')
+
       // Check if serial is available
       if ('serial' in navigator) {
         try {
@@ -46,12 +48,39 @@ export default {
           const encoder = new TextEncoder()
 
           const writer = port.writable.getWriter()
+
+          for (const i of lpSequence.array.toReversed()) {
+            try {
+              await writer.write(encoder.encode(i.code))
+              // oktava
+              await writer.write(encoder.encode(4))
+
+              // duration
+              await writer.write(encoder.encode(3))
+
+              console.log('the nucleo should have received:', i.code, 4, 3)
+            } catch (error) {
+              console.error(error)
+            }
+          }
+          // terminate song
           try {
-            await writer.write(encoder.encode(8))
+            await writer.write(encoder.encode(-1))
+            await writer.write(encoder.encode(0))
+            await writer.write(encoder.encode(0))
+            console.log('the nucleo should have received:', -1, 4, 3)
           } catch (error) {
             console.error(error)
           }
 
+          //write tempo
+          try {
+            await writer.write(encoder.encode(200))
+          } catch (error) {
+            console.error(error)
+          }
+
+          //end transmission
           writer.releaseLock()
         } catch (error) {
           console.error(error)
