@@ -4,7 +4,7 @@ import { lpSequence } from '@/states/launchpadSequence.js'
 <template>
   <div :class="`grid grid-cols-${5} gap-4 w-[35rem] mb-8`">
     <button
-      class="bg-zinc-800 hover:shadow-md border border-zinc-700 hover:shadow-red-700 rounded-xl aspect-square transition-all duration-150 ease-out active:border-red-600 active:bg-red-600 outline-none"
+      class="bg-zinc-800 text-xl text-zinc-400 hover:shadow-md border border-zinc-700 hover:shadow-rose-700 rounded-xl aspect-square transition-all duration-150 ease-out active:border-rose-600 active:bg-rose-600 outline-none"
       @click="handleLaunchpadButtonClick(note)"
       v-for="(note, index) in notesMapped"
       :key="index"
@@ -13,7 +13,7 @@ import { lpSequence } from '@/states/launchpadSequence.js'
     </button>
     <button
       @click="handleLaunchpadButtonClick({ name: '-' })"
-      class="bg-zinc-800 row-start-1 col-start-5 row-span-4 hover:shadow-md border border-zinc-700 hover:shadow-red-700 rounded-xl transition-all duration-150 ease-out active:border-red-600 active:bg-red-600 outline-none"
+      class="bg-zinc-800 row-start-1 text-zinc-400 col-start-5 row-span-4 hover:shadow-md border border-zinc-700 hover:shadow-rose-700 rounded-xl transition-all duration-150 ease-out active:border-rose-600 active:bg-rose-600 outline-none"
     >
       -
     </button>
@@ -30,7 +30,12 @@ export default {
   },
   methods: {
     handleLaunchpadButtonClick(note) {
-      lpSequence.unshift(note)
+      console.log(note)
+      lpSequence.array.unshift({
+        name: note.name,
+        id: lpSequence.numberOfItems
+      })
+      lpSequence.numberOfItems++
     }
   },
   computed: {
