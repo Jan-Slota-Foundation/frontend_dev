@@ -35,10 +35,11 @@ export default {
   name: 'ScrollSequence',
   methods: {
     async handlePush() {
+      // Check if serial is available
       if ('serial' in navigator) {
         try {
-          const port = await navigator.serial.requestPort()
-
+          const port = await navigator.serial.getPorts()
+          console.log(port)
           await port.open({ baudRate: 9600 })
 
           const encoder = new TextEncoder()
