@@ -12,7 +12,17 @@ const routes = [
       },
       {
         path: '/userinput',
-        component: () => import('@/views/UserInput.vue')
+        component: () => import('@/views/UserInput.vue'),
+        children: [
+          {
+            path: '/userinput/pad'
+            // component: () => import('@/views/UserInput.vue')
+          },
+          {
+            path: '/userinput/text'
+            // component: () => import('@/views/UserInput.vue')
+          }
+        ]
       }
     ]
   }
