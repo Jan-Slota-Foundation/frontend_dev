@@ -1,6 +1,7 @@
 <template>
-  <div>User Input Screen</div>
-  <Launchpad></Launchpad>
+  <div class="">
+    <Launchpad></Launchpad>
+  </div>
 </template>
 
 <script>

@@ -1,9 +1,15 @@
+<script setup>
+import Sidebar from '@/components/Sidebar.vue'
+</script>
 <template>
-  <main>
-    Welcome to our project!!
+  <main class="grid gap-3">
     <router-view />
+    <Sidebar></Sidebar>
   </main>
 </template>
 
-<script setup></script>
-<style></style>
+<style>
+.grid {
+  grid-template-columns: 1fr auto;
+}
+</style>
