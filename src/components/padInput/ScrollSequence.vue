@@ -34,6 +34,13 @@ import { lpSequence } from '@/states/launchpadSequence.js'
 export default {
   name: 'ScrollSequence',
   methods: {
+    numToUint8Array(num) {
+      const arr = new Uint8Array(8)
+
+      for (let i = 0; i < 8; i++) arr.set([num / 0x100 ** i], 7 - i)
+
+      return arr
+    },
     async handlePush() {
       console.log('iteration')
 
@@ -45,29 +52,25 @@ export default {
           console.log(port)
           await port.open({ baudRate: 9600 })
 
-          const encoder = new TextEncoder()
-
           const writer = port.writable.getWriter()
 
           for (const i of lpSequence.array.toReversed()) {
             try {
-              await writer.write(encoder.encode(i.code))
+              await writer.write(numToUint8Array(i.code))
               // oktava
-              await writer.write(encoder.encode(4))
+              await writer.write(numToUint8Array(4))
 
               // duration
-              await writer.write(encoder.encode(3))
-
-              console.log('the nucleo should have received:', i.code, 4, 3)
+              await writer.write(numToUint8Array(3))
             } catch (error) {
               console.error(error)
             }
           }
           // terminate song
           try {
-            await writer.write(encoder.encode(-1))
-            await writer.write(encoder.encode(0))
-            await writer.write(encoder.encode(0))
+            await writer.write(numToUint8Array(-1))
+            await writer.write(numToUint8Array(0))
+            await writer.write(numToUint8Array(0))
             console.log('the nucleo should have received:', -1, 4, 3)
           } catch (error) {
             console.error(error)
@@ -75,7 +78,7 @@ export default {
 
           //write tempo
           try {
-            await writer.write(encoder.encode(200))
+            await writer.write(numToUint8Array(200))
           } catch (error) {
             console.error(error)
           }
