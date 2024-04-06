@@ -47,7 +47,10 @@ export default {
 
           const writer = port.writable.getWriter()
           try {
-            await writer.write(encoder.encode(8))
+            // jedna nota vypada takto
+            await writer.write(encoder.encode(4)) // nota
+            await writer.write(encoder.encode(4)) // oktava
+            await writer.write(encoder.encode(3)) // dlzka
           } catch (error) {
             console.error(error)
           }
