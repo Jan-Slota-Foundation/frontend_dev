@@ -35,21 +35,27 @@ export default {
   name: 'ScrollSequence',
   methods: {
     async handlePush() {
-      try {
-        await port.open({ baudRate: 9600 })
-
-        const encoder = new TextEncoder()
-
-        const writer = port.writable.getWriter()
+      if ('serial' in navigator) {
         try {
-          await writer.write(8)
+          const port = await navigator.serial.requestPort()
+
+          await port.open({ baudRate: 9600 })
+
+          const encoder = new TextEncoder()
+
+          const writer = port.writable.getWriter()
+          try {
+            await writer.write(8)
+          } catch (error) {
+            console.error(error)
+          }
+
+          writer.releaseLock()
         } catch (error) {
           console.error(error)
         }
-
-        writer.releaseLock()
-      } catch (error) {
-        console.error(error)
+      } else {
+        console.error('Serial is not supported')
       }
     }
   }
