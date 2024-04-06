@@ -38,8 +38,9 @@ export default {
       // Check if serial is available
       if ('serial' in navigator) {
         try {
-          const port = await navigator.serial.getPorts()
-          console.log(port)
+          const ports = await navigator.serial.getPorts()
+
+          console.log(ports)
           await port.open({ baudRate: 9600 })
 
           const encoder = new TextEncoder()
