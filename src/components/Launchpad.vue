@@ -1,6 +1,10 @@
 <template>
   <div class="grid grid-cols-4">
-    <button v-for="(button, index) in numberOfButtons" :key="index">
+    <button
+      @click="handleLaunchpadButtonClick()"
+      v-for="(button, index) in numberOfButtons"
+      :key="index"
+    >
       {{ index }}
     </button>
   </div>
@@ -13,6 +17,9 @@ export default {
     return {
       numberOfButtons: 16
     }
+  },
+  methods: {
+    handleLaunchpadButtonClick() {}
   }
 }
 </script>

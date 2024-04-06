@@ -1,5 +1,9 @@
 <script setup></script>
 
 <template>
-  <router-view />
+  <div class="text-zinc-200">
+    <router-view />
+  </div>
 </template>
+
+<style></style>

@@ -1,5 +1,5 @@
 <template>
-  <aside>This is the sidebar component</aside>
+  <aside class="bg-zinc-800">This is the sidebar component</aside>
 </template>
 
 <script>
