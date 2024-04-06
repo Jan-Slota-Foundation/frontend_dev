@@ -15,12 +15,12 @@ const routes = [
         component: () => import('@/views/UserInput.vue'),
         children: [
           {
-            path: '/userinput/pad'
-            // component: () => import('@/views/UserInput.vue')
+            path: '/userinput/pad',
+            component: () => import('@/components/padInput/PadView.vue')
           },
           {
             path: '/userinput/text'
-            // component: () => import('@/views/UserInput.vue')
+            // component: () => import('@/components/textInput/Launchpad.vue')
           }
         ]
       }

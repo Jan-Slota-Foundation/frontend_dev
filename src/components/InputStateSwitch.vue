@@ -1,3 +1,6 @@
+<script setup>
+import router from '@/router/index.js'
+</script>
 <template>
   <div class="bg-zinc-800 p-1 rounded-lg w-fit flex gap-4 mb-10">
     <button
@@ -5,13 +8,13 @@
       :key="index"
       :class="[
         'py-2 px-6 rounded-md tracking-wider text-lg font-normal transition-all duration-200 ',
-        activeInputState === state
+        activeInputState === state.name
           ? 'bg-zinc-900 text-rose-600'
           : 'text-zinc-500'
       ]"
-      @click="activeInputState = state"
+      @click="handleChangeUserState(state.path)"
     >
-      {{ state }}
+      {{ state.name }}
     </button>
   </div>
 </template>
@@ -22,7 +25,16 @@ export default {
   data() {
     return {
       activeInputState: 'Launchpad',
-      inputStates: ['Launchpad', 'Keyboard', 'Text to voice']
+      inputStates: [
+        { name: 'Launchpad', path: 'pad' },
+        { name: 'Keyboard', path: 'keyboard' },
+        { name: 'Text to voice', path: 'text' }
+      ]
+    }
+  },
+  methods: {
+    handleChangeUserState(path) {
+      router.push(`/userinput/${path}`)
     }
   }
 }
