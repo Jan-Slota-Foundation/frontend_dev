@@ -2,7 +2,7 @@
 import Sidebar from '@/components/Sidebar.vue'
 </script>
 <template>
-  <main class="grid gap-3 app-grid">
+  <main class="grid gap-3 app-grid h-screen">
     <router-view />
     <Sidebar></Sidebar>
   </main>
