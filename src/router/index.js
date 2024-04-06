@@ -19,9 +19,9 @@ const routes = [
             component: () => import('@/components/padInput/PadView.vue')
           },
           {
-            path: '/userinput/text'
-            // component: () => import('@/components/textInput/Launchpad.vue')
-          }
+            path: '/userinput/text',
+             component: () => import('@/components/textInput/TextField.vue')
+          },
         ]
       }
     ]
