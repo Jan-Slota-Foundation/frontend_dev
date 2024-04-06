@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-cols-4">
-    <button v-for="(button, index) in numberOfButtons" :key="index">
+  <div class="grid grid-cols-4 gap-4 max-w-[35rem]">
+    <button class="bg-zinc-800 hover:shadow-md hover:shadow-rose-600 rounded-lg aspect-square" v-for="(button, index) in numberOfButtons" :key="index">
       {{ index }}
     </button>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="p-7">
     <Launchpad></Launchpad>
   </div>
 </template>
