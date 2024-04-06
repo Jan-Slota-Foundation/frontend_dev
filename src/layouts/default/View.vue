@@ -2,14 +2,14 @@
 import Sidebar from '@/components/Sidebar.vue'
 </script>
 <template>
-  <main class="grid gap-3">
+  <main class="grid gap-3 app-grid">
     <router-view />
     <Sidebar></Sidebar>
   </main>
 </template>
 
 <style>
-.grid {
+.app-grid {
   grid-template-columns: 1fr auto;
 }
 </style>
