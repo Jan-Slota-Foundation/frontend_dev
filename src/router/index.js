@@ -1,4 +1,5 @@
 // Composables
+import { comma } from 'postcss/lib/list'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -23,8 +24,17 @@ const routes = [
              component: () => import('@/components/textInput/TextField.vue')
           },
         ]
-      }
-    ]
+      },
+    ],
+
+  },
+  {
+    path : '/register',
+    component: () => import('@/views/RegistermForm.vue') 
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/LoginForm.vue')
   }
 ]
 
