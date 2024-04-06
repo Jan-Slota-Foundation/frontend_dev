@@ -1,10 +1,13 @@
 <template>
   <div>User Input Screen</div>
+  <Launchpad></Launchpad>
 </template>
 
 <script>
+import Launchpad from '@/components/Launchpad.vue'
 export default {
-  name: 'LaunchpadView'
+  name: 'LaunchpadView',
+  components: { Launchpad }
 }
 </script>
 
