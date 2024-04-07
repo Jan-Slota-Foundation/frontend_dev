@@ -66,26 +66,34 @@ export default {
               for (const i of response.split('')) {
                 switch (i) {
                   case ' ':
+                    console.log('medzera')
                     data[0] = '0'.charCodeAt(0)
                     data[1] = '4'.charCodeAt(0)
                     data[2] = '2'.charCodeAt(0)
                     break
                   case '-':
+                    console.log('dash')
+
                     data[0] = '4'.charCodeAt(0)
                     data[1] = '4'.charCodeAt(0)
                     data[2] = '4'.charCodeAt(0)
                     break
                   case '.':
+                    console.log('bodka')
+
                     data[0] = '4'.charCodeAt(0)
                     data[1] = '4'.charCodeAt(0)
                     data[2] = '2'.charCodeAt(0)
                     break
                   case '/':
+                    console.log('slash')
+
                     data[0] = '0'.charCodeAt(0)
                     data[1] = '4'.charCodeAt(0)
                     data[2] = '4'.charCodeAt(0)
                     break
                 }
+
                 await writer.write(data)
                 console.log(i)
               }
