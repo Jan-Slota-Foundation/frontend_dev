@@ -97,13 +97,13 @@ export default {
       this.notes.forEach((note) => {
         final.push({
           name: `${note}`,
-          code: mapNoteToCode(note)
+          code: this.mapNoteToCode(note)
         })
 
         if (note !== 'b' && note !== 'e') {
           final.push({
             name: `${note}#`,
-            code: mapNoteToCode(note)
+            code: this.mapNoteToCode(note)
           })
         }
       })
