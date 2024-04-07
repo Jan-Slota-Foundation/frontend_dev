@@ -1,3 +1,6 @@
+<script setup>
+import { serial } from '@/states/serialStates.js'
+</script>
 <template>
   <div class="flex flex-col items-end">
     <div
@@ -18,7 +21,7 @@
       ></textarea>
     </div>
     <button @click="handleSendText" class="bg-rose-600 rounded-xl w-[10rem]">
-      SEND MESSAGE
+      Transcribe to morse
     </button>
   </div>
 </template>
@@ -32,7 +35,7 @@ export default {
     }
   },
   methods: {
-    handleSendText() {
+    async handleSendText() {
       const options = {
         method: 'POST',
         headers: {
@@ -44,7 +47,58 @@ export default {
 
       fetch('http://hadedvade.pythonanywhere.com/morse', options)
         .then((response) => response.json())
-        .then((response) => console.log(response))
+        .then(async (response) => {
+          if ('serial' in navigator) {
+            try {
+              const port = await navigator.serial.requestPort()
+
+              await port.open({ baudRate: 9600 })
+
+              serial.connected = true
+
+              const encoder = new TextEncoder()
+
+              const writer = port.writable.getWriter()
+
+              let data = new Uint8Array(3)
+              data.fill(0)
+
+              for (const i of response.split('')) {
+                switch (i) {
+                  case ' ':
+                    data[0] = '0'.charCodeAt(0)
+                    data[1] = '4'.charCodeAt(0)
+                    data[4] = '2'.charCodeAt(0)
+                    break
+                  case '-':
+                    data[0] = '4'.charCodeAt(0)
+                    data[1] = '4'.charCodeAt(0)
+                    data[4] = '4'.charCodeAt(0)
+                    break
+                  case '.':
+                    data[0] = '4'.charCodeAt(0)
+                    data[1] = '4'.charCodeAt(0)
+                    data[4] = '2'.charCodeAt(0)
+                    break
+                  case '/':
+                    data[0] = '0'.charCodeAt(0)
+                    data[1] = '4'.charCodeAt(0)
+                    data[4] = '4'.charCodeAt(0)
+                    break
+                }
+                await writer.write(data)
+              }
+              data.fill(0)
+              data[0] = 'K'.charCodeAt(0)
+              await writer.write(data)
+
+              data.fill(0)
+              // const tempo =  Number(200).toString()
+              await wirter.write(data)
+              serial.connected = false
+            } catch (error) {}
+          }
+        })
         .catch((err) => console.error(err))
     }
   }

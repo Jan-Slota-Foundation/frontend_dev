@@ -14,18 +14,7 @@ import { serial } from '@/states/serialStates.js'
 <script>
 export default {
   name: 'LaunchpadView',
-  components: { InputStateSwitch },
-  async mounted() {
-    if ('serial' in navigator) {
-      serial.port = await navigator.serial.requestPort()
-      try {
-        await serial.port.open({ baudRate: 9600 })
-        serial.connected = true
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
+  components: { InputStateSwitch }
 }
 </script>
 
