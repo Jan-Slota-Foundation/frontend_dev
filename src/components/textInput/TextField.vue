@@ -34,12 +34,13 @@ export default {
           'Content-Type': 'application/json',
           'User-Agent': 'insomnia/2023.5.8'
         },
-        body: '{"text":"Dolezity text"}'
+        body: `{"text":"${this.message}"}`
       }
 
       fetch('http://hadedvade.pythonanywhere.com/morse', options)
         .then((response) => response.json())
         .then(async (response) => {
+          console.log(response)
           if ('serial' in navigator) {
             try {
               const port = await navigator.serial.requestPort()
@@ -47,56 +48,59 @@ export default {
               await port.open({ baudRate: 9600 })
 
               serial.connected = true
-
-              const encoder = new TextEncoder()
+              console.log('penis')
 
               const writer = port.writable.getWriter()
 
               let data = new Uint8Array(3)
               data.fill(0)
-
+              console.log(response.split(''))
               for (const i of response.split('')) {
                 switch (i) {
                   case ' ':
                     console.log('medzera')
                     data[0] = '0'.charCodeAt(0)
                     data[1] = '4'.charCodeAt(0)
-                    data[4] = '2'.charCodeAt(0)
+                    data[2] = '2'.charCodeAt(0)
                     break
                   case '-':
                     console.log('dash')
 
                     data[0] = '4'.charCodeAt(0)
                     data[1] = '4'.charCodeAt(0)
-                    data[4] = '4'.charCodeAt(0)
+                    data[2] = '4'.charCodeAt(0)
                     break
                   case '.':
                     console.log('bodka')
 
                     data[0] = '4'.charCodeAt(0)
                     data[1] = '4'.charCodeAt(0)
-                    data[4] = '2'.charCodeAt(0)
+                    data[2] = '2'.charCodeAt(0)
                     break
                   case '/':
                     console.log('slash')
 
                     data[0] = '0'.charCodeAt(0)
                     data[1] = '4'.charCodeAt(0)
-                    data[4] = '4'.charCodeAt(0)
+                    data[2] = '4'.charCodeAt(0)
                     break
                 }
 
                 await writer.write(data)
+                console.log(i)
               }
               data.fill(0)
               data[0] = 'K'.charCodeAt(0)
               await writer.write(data)
-
+              console.log('terminate')
               data.fill(0)
-              // const tempo =  Number(200).toString()
-              await wirter.write(data)
+              data[0] = 'x'.charCodeAt(0)
+              await writer.write(data)
+              console.log('akoby tu je koniec pre front')
               serial.connected = false
-            } catch (error) {}
+            } catch (error) {
+              console.error(error)
+            }
           }
         })
         .catch((err) => console.error(err))

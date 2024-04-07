@@ -110,11 +110,7 @@ export default {
             await writer.write(data)
 
             data.fill(0)
-            const tempo = Number(200).toString()
-
-            for (let i = 0; i < tempo.length; i++) {
-              data[data.length - i - 1] = tempo.charCodeAt(i)
-            }
+            data[0] = 'x'.charCodeAt(0)
             await writer.write(data)
 
             await writer.write(encoder.encode(0))
