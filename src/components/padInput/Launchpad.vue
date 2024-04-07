@@ -25,7 +25,7 @@ export default {
   name: 'Launchpad',
   data() {
     return {
-      notes: ['c', 'd', 'e', 'f', 'g', 'a', 'b']
+      notes: ['a', 'b', 'c', 'd', 'e', 'f', 'g']
     }
   },
   methods: {

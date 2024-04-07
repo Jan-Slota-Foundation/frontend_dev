@@ -2,7 +2,7 @@
 import { lpSequence } from '@/states/launchpadSequence.js'
 </script>
 <template>
-  <div class="flex gap-12">
+  <div class="flex gap-2">
     <transition-group
       tag="div"
       name="list"
@@ -23,7 +23,7 @@ import { lpSequence } from '@/states/launchpadSequence.js'
     </transition-group>
     <button
       @click="handlePush"
-      class="bg-rose-700 px-6 rounded-lg tracking-wider font-semibold"
+      class="bg-rose-700 px-6 rounded-lg my-1 tracking-wider font-semibold"
     >
       Push
     </button>
