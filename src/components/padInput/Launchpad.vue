@@ -38,36 +38,72 @@ export default {
       lpSequence.numberOfItems++
 
       console.log(lpSequence.array)
+    },
+    mapNoteToCode(note) {
+      let final = ''
+      switch (note) {
+        case 'a':
+          final = '1'
+          break
+        case 'a#':
+          final = '2'
+          break
+        case 'b':
+          final = '3'
+
+          break
+        case 'c':
+          final = '4'
+
+          break
+        case 'c#':
+          final = '5'
+
+          break
+        case 'd':
+          final = '6'
+
+          break
+        case 'd#':
+          final = '7'
+
+          break
+        case 'e':
+          final = '8'
+
+          break
+        case 'f':
+          final = '9'
+
+          break
+        case 'f#':
+          final = ':'
+
+          break
+        case 'g':
+          final = ';'
+
+          break
+        case 'g#':
+          final = '<'
+          break
+      }
+      return final
     }
   },
   computed: {
     notesMapped() {
       let final = []
       this.notes.forEach((note) => {
-        console.log('note is is:', note)
-        let notes = [
-          'a',
-          'a#',
-          'b',
-          'c',
-          'c#',
-          'd',
-          'd#',
-          'e',
-          'f',
-          'f#',
-          'g',
-          'g#'
-        ]
-
         final.push({
           name: `${note}`,
-          code: notes.indexOf(note) + 1
+          code: mapNoteToCode(note)
         })
+
         if (note !== 'b' && note !== 'e') {
           final.push({
             name: `${note}#`,
-            code: notes.indexOf(`${note}#`) + 1
+            code: mapNoteToCode(note)
           })
         }
       })

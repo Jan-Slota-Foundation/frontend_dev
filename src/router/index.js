@@ -21,16 +21,15 @@ const routes = [
           },
           {
             path: '/userinput/text',
-             component: () => import('@/components/textInput/TextField.vue')
-          },
+            component: () => import('@/components/textInput/TextField.vue')
+          }
         ]
-      },
-    ],
-
+      }
+    ]
   },
   {
-    path : '/register',
-    component: () => import('@/views/RegistermForm.vue') 
+    path: '/register',
+    component: () => import('@/views/RegisterForm.vue')
   },
   {
     path: '/login',

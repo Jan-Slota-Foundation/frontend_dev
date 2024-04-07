@@ -49,22 +49,21 @@ export default {
 
           const writer = port.writable.getWriter()
 
-          let data = new Uint8Array(3);
-          data.fill(0);
-          
-          //await writer.write(data)
+          let data = new Uint8Array(3)
+          data.fill(0)
 
+          //await writer.write(data)
 
           const end = lpSequence.array.toReversed()
           end.shift()
 
           for (let i of end) {
             try {
-              data[0] = Number(i.code).toString().charCodeAt(0)
-              data[1] = Number("3").toString().charCodeAt(0)
-              data[2] = Number("3").toString().charCodeAt(0)
+              data[0] = i.code.charCodeAt(0)
+              data[1] = Number('3').toString().charCodeAt(0)
+              data[2] = Number('3').toString().charCodeAt(0)
               await writer.write(data)
-             
+
               console.log('the nucleo should have received:', i.code, 4, 3)
             } catch (error) {
               console.error(error)
@@ -73,9 +72,9 @@ export default {
           // // terminate song
           try {
             data.fill(0)
-            data[0] = "K".charCodeAt(0)
+            data[0] = 'K'.charCodeAt(0)
             await writer.write(data)
-            
+
             data.fill(0)
             const tempo = Number(200).toString()
 
@@ -100,7 +99,6 @@ export default {
           //end transmission
           writer.releaseLock()
           //writer.close()
-
         } catch (error) {
           console.error(error)
         }
