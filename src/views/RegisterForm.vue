@@ -47,6 +47,7 @@ export default {
         .then((userCredential) => {
           console.log('signedIn')
           const user = userCredential.user
+          router.push('/userinput')
         })
         .catch((error) => {
           const errorCode = error.code
