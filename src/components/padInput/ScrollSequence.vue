@@ -34,13 +34,6 @@ import { lpSequence } from '@/states/launchpadSequence.js'
 export default {
   name: 'ScrollSequence',
   methods: {
-    numToUint8Array(num) {
-      const arr = new Uint8Array(8)
-
-      for (let i = 0; i < 8; i++) arr.set([num / 0x100 ** i], 7 - i)
-
-      return arr
-    },
     async handlePush() {
       console.log('iteration')
 
@@ -52,25 +45,46 @@ export default {
           console.log(port)
           await port.open({ baudRate: 9600 })
 
+          const encoder = new TextEncoder()
+
           const writer = port.writable.getWriter()
 
-          for (const i of lpSequence.array.toReversed()) {
-            try {
-              await writer.write(numToUint8Array(i.code))
-              // oktava
-              await writer.write(numToUint8Array(4))
+          let data = new Uint8Array(3);
+          data.fill(0);
+          
+          //await writer.write(data)
 
-              // duration
-              await writer.write(numToUint8Array(3))
+
+          const end = lpSequence.array.toReversed()
+          end.shift()
+
+          for (let i of end) {
+            try {
+              data[0] = Number(i.code).toString().charCodeAt(0)
+              data[1] = Number("3").toString().charCodeAt(0)
+              data[2] = Number("3").toString().charCodeAt(0)
+              await writer.write(data)
+             
+              console.log('the nucleo should have received:', i.code, 4, 3)
             } catch (error) {
               console.error(error)
             }
           }
-          // terminate song
+          // // terminate song
           try {
-            await writer.write(numToUint8Array(-1))
-            await writer.write(numToUint8Array(0))
-            await writer.write(numToUint8Array(0))
+            data.fill(0)
+            data[0] = "K".charCodeAt(0)
+            await writer.write(data)
+            
+            data.fill(0)
+            const tempo = Number(200).toString()
+
+            for (let i = 0; i < tempo.length; i++) {
+              data[data.length - i - 1] = tempo.charCodeAt(i)
+            }
+            await writer.write(data)
+
+            await writer.write(encoder.encode(0))
             console.log('the nucleo should have received:', -1, 4, 3)
           } catch (error) {
             console.error(error)
@@ -78,13 +92,15 @@ export default {
 
           //write tempo
           try {
-            await writer.write(numToUint8Array(200))
+            await writer.write(encoder.encode(200))
           } catch (error) {
             console.error(error)
           }
 
           //end transmission
           writer.releaseLock()
+          //writer.close()
+
         } catch (error) {
           console.error(error)
         }
