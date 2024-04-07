@@ -61,7 +61,7 @@ export default {
             try {
               data[0] = i.code.charCodeAt(0)
               data[1] = Number('3').toString().charCodeAt(0)
-              data[2] = Number('3').toString().charCodeAt(0)
+              data[2] = Number('4').toString().charCodeAt(0)
               await writer.write(data)
 
               console.log('the nucleo should have received:', i.code, 4, 3)
