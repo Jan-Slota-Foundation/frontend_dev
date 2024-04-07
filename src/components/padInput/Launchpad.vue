@@ -103,7 +103,7 @@ export default {
         if (note !== 'b' && note !== 'e') {
           final.push({
             name: `${note}#`,
-            code: this.mapNoteToCode(note)
+            code: this.mapNoteToCode(`${note}#`)
           })
         }
       })
