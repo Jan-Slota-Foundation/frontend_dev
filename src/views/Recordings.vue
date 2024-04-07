@@ -11,7 +11,7 @@
         >
           <span>{{ tune.name }}</span>
           <button
-            @click="handleRecordingPlay"
+            @click="handleRecordingPlay(tune)"
             class="px-6 py-2 rounded-md bg-rose-700"
           >
             Play
@@ -35,15 +35,83 @@ export default {
     }
   },
   mounted() {
-    getDocs(colRef).then((snapshot) => {
-      console.log('snapshot captured', snapshot.docs[0].data())
-      snapshot.docs.forEach((doc) => {
-        this.tunes.push(doc.data())
+    setTimeout(() => {
+      getDocs(colRef).then((snapshot) => {
+        console.log('snapshot captured', snapshot.docs[0].data())
+        snapshot.docs.forEach((doc) => {
+          this.tunes.push(doc.data())
+        })
       })
-    })
+    }, 300)
   },
-  async handleRecordingPlay(tune) {
-    console.log(tune)
+  methods: {
+    async handleRecordingPlay(tune) {
+      if ('serial' in navigator) {
+        this.isSongPlaying = true
+        try {
+          const port = await navigator.serial.requestPort()
+
+          console.log(port)
+          await port.open({ baudRate: 9600 })
+
+          const encoder = new TextEncoder()
+
+          const writer = port.writable.getWriter()
+
+          let data = new Uint8Array(3)
+          data.fill(0)
+
+          //await writer.write(data)
+
+          const end = lpSequence.array.toReversed()
+          end.shift()
+
+          for (let i of end) {
+            try {
+              console.log(i.code.charCodeAt(0))
+              data[0] = i.code.charCodeAt(0)
+              data[1] = i.octave.toString().charCodeAt(0)
+              data[2] = Number('4').toString().charCodeAt(0)
+              await writer.write(data)
+
+              console.log('the nucleo should have received:', i.code, 4, 3)
+            } catch (error) {
+              console.error(error)
+            }
+          }
+          // // terminate song
+          try {
+            data.fill(0)
+            data[0] = 'K'.charCodeAt(0)
+            await writer.write(data)
+
+            data.fill(0)
+            data[0] = 'x'.charCodeAt(0)
+            await writer.write(data)
+
+            await writer.write(encoder.encode(0))
+            console.log('the nucleo should have received:', -1, 4, 3)
+          } catch (error) {
+            console.error(error)
+          }
+
+          //write tempo
+          try {
+            await writer.write(encoder.encode(200))
+          } catch (error) {
+            console.error(error)
+          }
+
+          //end transmission
+          writer.releaseLock()
+          //writer.close()
+        } catch (error) {
+          console.error(error)
+        }
+      } else {
+        console.error('Serial is not supported')
+      }
+    }
   }
 }
 </script>

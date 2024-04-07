@@ -38,10 +38,11 @@ const auth = getAuth()
 
 onAuthStateChanged(auth, (u) => {
   if (u) {
-    const uid = u.uid
+    console.log('user logged in')
     user.isLoggedIn = true
     user.data = u
   } else {
+    console.log('user logged out')
     user.isLoggedIn = false
   }
 })
