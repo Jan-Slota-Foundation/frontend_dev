@@ -1,5 +1,6 @@
 import { reactive } from 'vue'
 
 export const serial = reactive({
-  connected: false
+  connected: false,
+  port: null
 })

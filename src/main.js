@@ -8,6 +8,7 @@ import { getAnalytics } from 'firebase/analytics'
 import { registerPlugins } from '@/plugins'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { user } from '@/states/user.js'
+import { serial } from '@/states/serialStates.js'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCalcb4PjI81wMVO9QphizfV3Bi3crw-JQ',

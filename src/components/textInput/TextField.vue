@@ -17,7 +17,9 @@
         maxlength="255"
       ></textarea>
     </div>
-    <button class="bg-rose-600 rounded-xl w-[10rem]">SEND MESSAGE</button>
+    <button @click="handleSendText" class="bg-rose-600 rounded-xl w-[10rem]">
+      SEND MESSAGE
+    </button>
   </div>
 </template>
 <script>
@@ -27,6 +29,23 @@ export default {
     return {
       message: '',
       selected: ''
+    }
+  },
+  methods: {
+    handleSendText() {
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'User-Agent': 'insomnia/2023.5.8'
+        },
+        body: '{"text":"Dolezity text"}'
+      }
+
+      fetch('http://hadedvade.pythonanywhere.com/morse', options)
+        .then((response) => response.json())
+        .then((response) => console.log(response))
+        .catch((err) => console.error(err))
     }
   }
 }
