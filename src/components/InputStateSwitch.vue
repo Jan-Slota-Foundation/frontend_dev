@@ -8,11 +8,11 @@ import router from '@/router/index.js'
       :key="index"
       :class="[
         'py-2 px-6 rounded-md font-semibold tracking-wider text-lg  transition-all duration-200 ',
-        activeInputState === state.name
+        activeInputState === state.path
           ? 'bg-zinc-900 text-rose-600'
           : 'text-zinc-500'
       ]"
-      @click="handleChangeUserState(state.path)"
+      @click="handleChangeUserState(state)"
     >
       {{ state.name }}
     </button>
@@ -20,21 +20,30 @@ import router from '@/router/index.js'
 </template>
 
 <script>
+import { useRoute } from 'vue-router'
+
 export default {
   name: 'InputStateSwich',
   data() {
     return {
-      activeInputState: 'Launchpad',
+      activeInputState: '',
       inputStates: [
-        { name: 'Launchpad', path: 'pad' },
-        { name: 'Text to voice', path: 'text' }
+        { name: 'Launchpad', path: '/userinput/pad' },
+        { name: 'Text to voice', path: '/userinput/text' },
+        { name: 'Convert', path: '/userinput/convert' }
       ]
     }
   },
   methods: {
-    handleChangeUserState(path) {
-      router.push(`/userinput/${path}`)
+    handleChangeUserState(state) {
+      router.push(state.path)
+
+      this.activeInputState = state.path
     }
+  },
+  mounted() {
+    console.log(useRoute().path)
+    this.activeInputState = useRoute().path
   }
 }
 </script>

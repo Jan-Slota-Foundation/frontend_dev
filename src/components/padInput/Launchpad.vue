@@ -2,7 +2,7 @@
 import { lpSequence } from '@/states/launchpadSequence.js'
 </script>
 <template>
-  <div :class="`grid grid-cols-5 gap-4 w-[35rem] mb-8 `">
+  <div :class="`grid grid-cols-5 gap-4 w-[42rem] mb-24 `">
     <button
       class="bg-zinc-800 w-full text-xl text-zinc-400 hover:shadow-md border border-zinc-700 hover:shadow-rose-700 rounded-xl aspect-square transition-all duration-150 ease-out active:border-rose-600 active:bg-rose-600 outline-none"
       @click="handleLaunchpadButtonClick(note)"
@@ -33,7 +33,8 @@ export default {
       lpSequence.array.unshift({
         name: note.name,
         id: lpSequence.numberOfItems,
-        code: note.code
+        code: note.code,
+        octave: lpSequence.currentOctave
       })
       lpSequence.numberOfItems++
 
