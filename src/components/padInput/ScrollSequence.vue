@@ -92,6 +92,7 @@ export default {
 
           for (let i of end) {
             try {
+              console.log(i.code.charCodeAt(0))
               data[0] = i.code.charCodeAt(0)
               data[1] = i.octave.toString().charCodeAt(0)
               data[2] = Number('4').toString().charCodeAt(0)

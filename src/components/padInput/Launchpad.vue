@@ -12,7 +12,7 @@ import { lpSequence } from '@/states/launchpadSequence.js'
       {{ note.name }}
     </button>
     <button
-      @click="handleLaunchpadButtonClick({ name: '-', code: 0 })"
+      @click="handleLaunchpadButtonClick({ name: '-', code: '0', octave: 4})"
       class="bg-zinc-800 row-start-1 text-zinc-400 col-start-5 row-span-3 hover:shadow-md border border-zinc-700 hover:shadow-rose-700 rounded-xl transition-all duration-150 ease-out active:border-rose-600 active:bg-rose-600 outline-none"
     >
       -
@@ -43,6 +43,9 @@ export default {
     mapNoteToCode(note) {
       let final = ''
       switch (note) {
+        case '-':
+          final = '0'
+          break
         case 'a':
           final = '1'
           break
