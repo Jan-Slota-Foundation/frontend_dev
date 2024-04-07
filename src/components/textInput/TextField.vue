@@ -2,7 +2,7 @@
 import { serial } from '@/states/serialStates.js'
 </script>
 <template>
-  <div class="flex flex-col gap-[2rem] mt-24 items-center">
+  <div class="flex flex-col gap-[2rem] mt-16 items-center">
     <textarea
       class="outline-none resize-none rounded-xl bg-zinc-800 w-[32rem] h-[18rem] px-5 pt-3 border border-zinc-600"
       v-model="message"

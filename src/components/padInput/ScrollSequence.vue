@@ -49,22 +49,28 @@ import { lpSequence } from '@/states/launchpadSequence.js'
       </svg>
     </button>
     <button
+      @click="saveTune"
       :class="[
         'bg-zinc-700 hover:bg-zinc-800 transition-all duration-200 px-4 min-w-[5rem] rounded-lg my-1 tracking-wider font-semibold flex justify-center items-center',
         isSongPlaying ? 'pointer-events-none' : ''
       ]"
     >
-      Save
+      {{ savingTune ? 'Saving' : 'Save' }}
     </button>
   </div>
 </template>
 
 <script>
+import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore'
+const db = getFirestore()
+
+const colRef = collection(db, 'tunes')
 export default {
   name: 'ScrollSequence',
   data() {
     return {
-      isSongPlaying: false
+      isSongPlaying: false,
+      savingTune: false
     }
   },
   methods: {
@@ -135,6 +141,22 @@ export default {
       } else {
         console.error('Serial is not supported')
       }
+    },
+    saveTune() {
+      this.savingTune = true
+      let tune = {
+        id: 111,
+        name: '',
+        notes: []
+      }
+
+      lpSequence.array.forEach((note) => {
+        console.log(note)
+        tune.notes.push(note)
+      })
+      tune.name = prompt('Please select a name for your new tune!')
+      addDoc(colRef, tune)
+      this.savingTune = false
     }
   }
 }
