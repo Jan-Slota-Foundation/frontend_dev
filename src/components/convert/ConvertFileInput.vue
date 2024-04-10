@@ -46,7 +46,7 @@ export default {
       console.log(this.$refs.fileInput.files[0])
       this.fileInput = this.$refs.fileInput.files[0]
     },
-    convertFile() {
+    async convertFile() {
       console.log(this.fileInput)
       const form = new FormData()
       form.append('music.mid', this.fileInput)
@@ -54,18 +54,45 @@ export default {
       const options = {
         method: 'POST',
         headers: {
-          'Content-Type':
-            'multipart/form-data; boundary=---011000010111000001101001',
-          'User-Agent': 'insomnia/2023.5.8'
-        }
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: form
       }
 
-      options.body = form
+      let result = await fetch('http://127.0.0.1:3000/upload', options)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok')
+          }
+          return response.json()
+        })
+        .then(async (response) => {
+          try {
+            const port = await navigator.serial.requestPort()
 
-      fetch('http://hack.hiimmilan.dev:3000/upload', options)
-        .then((response) => response.json())
-        .then((response) => console.log(response))
+          console.log(port)
+          await port.open({ baudRate: 9600 })
+
+          const encoder = new TextEncoder()
+
+          const writer = port.writable.getWriter()
+
+          let data = new Uint8Array(3)
+
+          for (let i of response) {
+            data.fill(0)
+            data[0] = i[0]
+            data[1] = i[1]
+            data[2] = i[2]
+            await writer.write(data)
+          }
+         } catch (error) {
+            console.error(error)
+          }
+        })
         .catch((err) => console.error(err))
+
+      console.log(result)
     }
   }
 }

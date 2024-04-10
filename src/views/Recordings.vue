@@ -63,10 +63,7 @@ export default {
 
           //await writer.write(data)
 
-          const end = lpSequence.array.toReversed()
-          end.shift()
-
-          for (let i of end) {
+          for (let i of tune.notes) {
             try {
               console.log(i.code.charCodeAt(0))
               data[0] = i.code.charCodeAt(0)
